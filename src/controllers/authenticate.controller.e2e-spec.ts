@@ -30,7 +30,7 @@ describe("Authenticate (E2E)", () => {
       },
     });
 
-    const response = await request(app.getHttpServer()).post("/accounts").send({
+    const response = await request(app.getHttpServer()).post("/sessions").send({
       email: "johndoe@example.com",
       password: "123456",
     });
