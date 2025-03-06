@@ -8,7 +8,7 @@ import { QuestioBestAnswerChosenEvent } from "./events/question-best-answer-chos
 
 export interface QuestionProps {
   authorId: UniqueEntityId;
-  bestAnswerId?: UniqueEntityId;
+  bestAnswerId?: UniqueEntityId | null;
   attachments: QuestionAttachmentList;
   title: string;
   content: string;
@@ -78,7 +78,7 @@ export class Question extends AggregateRoot<QuestionProps> {
     this.touch();
   }
 
-  set bestAnswerId(bestAnswerId: UniqueEntityId | undefined) {
+  set bestAnswerId(bestAnswerId: UniqueEntityId | undefined | null) {
     if (bestAnswerId === undefined) {
       return;
     }
