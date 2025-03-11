@@ -6,7 +6,6 @@ import { StudentsRepository } from "../repositories/students-repository";
 import { WrongCredentialsError } from "./errors/wrong-credentials-error";
 
 interface AuthenticateStudentUseCaseRequest {
-  name: string;
   email: string;
   password: string;
 }
@@ -27,7 +26,6 @@ export class AuthenticateStudentUseCase {
   ) {}
 
   async execute({
-    name,
     email,
     password,
   }: AuthenticateStudentUseCaseRequest): Promise<AuthenticateStudentUseCaseResponse> {
