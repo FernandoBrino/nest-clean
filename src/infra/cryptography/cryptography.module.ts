@@ -24,4 +24,4 @@ import { BcryptHasher } from "./bcrypt-hasher";
   ],
   exports: [Encrypter, HashComparer, HashGenerator],
 })
-export class CrptographyModule {}
+export class CryptographyModule {}
