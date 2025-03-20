@@ -8,7 +8,7 @@ import { JwtService } from "@nestjs/jwt";
 import { Test } from "@nestjs/testing";
 import request from "supertest";
 
-describe("Edit question (E2E)", () => {
+describe("Delete question (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let studentFactory: StudentFactory;
@@ -43,7 +43,8 @@ describe("Edit question (E2E)", () => {
 
     const response = await request(app.getHttpServer())
       .delete(`/questions/${questionId}`)
-      .set("Authorization", `Bearer ${acessToken}`);
+      .set("Authorization", `Bearer ${acessToken}`)
+      .send();
 
     expect(response.statusCode).toBe(204);
 
