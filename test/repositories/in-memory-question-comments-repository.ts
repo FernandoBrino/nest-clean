@@ -10,7 +10,7 @@ export class InMemoryQuestionCommentsRepository
   public items: QuestionComment[] = [];
 
   constructor(
-    private studentsRepostory: InMemoryStudentsRepository
+    private studentsRepository: InMemoryStudentsRepository
   ) {}
 
   async findById(id: string) {
@@ -38,7 +38,7 @@ export class InMemoryQuestionCommentsRepository
       .filter((item) => item.questionId.toString() === questionId)
       .slice((page - 1) * 20, page * 20)
       .map(comment => {
-        const author = this.studentsRepostory.items.find(student => {
+        const author = this.studentsRepository.items.find(student => {
           return student.id.equals(comment.authorId)
         })
 
