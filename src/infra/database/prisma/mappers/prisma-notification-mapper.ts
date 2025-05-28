@@ -1,6 +1,5 @@
 import { Notification as PrismaNotification, Prisma } from '@prisma/client'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { Slug } from '@/domain/forum/enterprise/entities/value-objects/slug'
 import { Notification } from '@/domain/notification/enterprise/entities/notification'
 
 export class PrismaNotificationMapper {
@@ -17,7 +16,7 @@ export class PrismaNotificationMapper {
     )
   }
 
-  static toPrisma(
+  static toPersistence(
     notification: Notification,
   ): Prisma.NotificationUncheckedCreateInput {
     return {
@@ -26,7 +25,7 @@ export class PrismaNotificationMapper {
       title: notification.title,
       content: notification.content,
       readAt: notification.readAt,
-      createdAt: notification.createdAt,
+      createdAt: notification.createdAt
     }
   }
 }

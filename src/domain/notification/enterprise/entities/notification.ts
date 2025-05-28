@@ -16,11 +16,11 @@ export class Notification extends Entity<NotificationProps> {
   }
 
   get title() {
-    return this.props.recipientId;
+    return this.props.title;
   }
 
   get content() {
-    return this.props.recipientId;
+    return this.props.content;
   }
 
   get readAt() {
@@ -28,7 +28,7 @@ export class Notification extends Entity<NotificationProps> {
   }
 
   get createdAt() {
-    return this.props.recipientId;
+    return this.props.createdAt;
   }
 
   read() {

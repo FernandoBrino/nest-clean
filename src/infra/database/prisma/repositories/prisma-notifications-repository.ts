@@ -1,9 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
-import { NotificationAttachmentsRepository } from "@/domain/forum/application/repositories/notification-attachments-repository";
-import { Notification } from "@/domain/forum/enterprise/entities/notification";
 import { NotificationsRepository } from "@/domain/notification/application/repositories/notifications-repository";
 import { PrismaNotificationMapper } from "../mappers/prisma-notification-mapper";
+import { Notification } from "@/domain/notification/enterprise/entities/notification";
 
 @Injectable()
 export class PrismaNotificationsRepository implements NotificationsRepository {
@@ -29,29 +28,16 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
     await this.prisma.notification.create({
       data,
     });
-
-    await this.notificationAttachmentsRepository.createMany(
-      notification.attachments.getItems()
-    );
   }
 
   async save(notification: Notification): Promise<void> {
     const data = PrismaNotificationMapper.toPersistence(notification);
 
-    await Promise.all([
-      this.prisma.notification.update({
-        where: {
-          id: data.id,
-        },
-        data,
-      }),
-      this.notificationAttachmentsRepository.createMany(
-        notification.attachments.getNewItems()
-      ),
-
-      this.notificationAttachmentsRepository.deleteMany(
-        notification.attachments.getRemovedItems()
-      ),
-    ]);
+    await this.prisma.notification.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    });
   }
 }
