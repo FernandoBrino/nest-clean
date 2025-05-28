@@ -1,17 +1,19 @@
-import { makeQuestion } from "@/factories/make-question";
-import { InMemoryQuestionCommentsRepository } from "@/repositories/in-memory-question-comments-repository";
-import { DeleteQuestionCommentUseCase } from "./delete-question-comment";
-import { makeQuestionComment } from "@/factories/make-question-comment";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { makeQuestionComment } from "@/factories/make-question-comment";
+import { InMemoryQuestionCommentsRepository } from "@/repositories/in-memory-question-comments-repository";
+import { InMemoryStudentsRepository } from "@/repositories/in-memory-students-repository";
 import { NotAllowedError } from "../../../../core/errors/errors/not-allowed-error";
+import { DeleteQuestionCommentUseCase } from "./delete-question-comment";
 
 let inMemoryQuestionCommentsRepository: InMemoryQuestionCommentsRepository;
+let inMemoryStudentsRepository: InMemoryStudentsRepository;
 let sut: DeleteQuestionCommentUseCase;
 
 describe("Delete Question Comment", () => {
   beforeEach(() => {
+    inMemoryStudentsRepository = new InMemoryStudentsRepository();
     inMemoryQuestionCommentsRepository =
-      new InMemoryQuestionCommentsRepository();
+      new InMemoryQuestionCommentsRepository(inMemoryStudentsRepository);
     sut = new DeleteQuestionCommentUseCase(inMemoryQuestionCommentsRepository);
   });
 

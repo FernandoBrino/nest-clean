@@ -21,12 +21,16 @@ export class QuestionDetails extends ValueObject<QuestionDetailsProps> {
     return this.props.questionId;
   }
 
-  get content() {
-    return this.props.content;
-  }
-
   get authorId() {
     return this.props.authorId;
+  }
+
+  get author() {
+    return this.props.author;
+  }
+
+  get content() {
+    return this.props.content;
   }
 
   get title() {
