@@ -8,7 +8,7 @@ import {
     Query,
 } from "@nestjs/common";
 import { z } from "zod";
-import { CommentPresenter } from "../presenters/comment.presenter";
+import { CommentPresenter } from "../presenters/comment-presenter";
 import { ComentWithAuthorPresenter } from "../presenters/comment-with-author-presenter";
 
 const pageQueryParamSchema = z
