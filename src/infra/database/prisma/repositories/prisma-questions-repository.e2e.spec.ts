@@ -56,13 +56,67 @@ describe("Prisma Questions Repository (E2E)", () => {
       attachmentId: attachment.id,
       questionId: question.id,
     });
-    
-    const slug = question.slug.value
+
+    const slug = question.slug.value;
 
     const questionDetails = await questionsRepository.findDetailsBySlug(slug);
 
-    const cached = await cacheRepository.get(`question:${slug}:details`)
+    const cached = await cacheRepository.get(`question:${slug}:details`);
 
-    expect(cached).toEqual(JSON.stringify(questionDetails))
+    expect(cached).toEqual(JSON.stringify(questionDetails));
+  });
+
+  it("should return cached question details on subsequent details", async () => {
+    const user = await studentFactory.makePrismaStudent();
+
+    const question = await questionFactory.makePrismaQuestion({
+      authorId: user.id,
+    });
+
+    const attachment = await attachmentFactory.makePrismaAttachment();
+
+    await questionAttachmentFactory.makePrismaQuestionAttachment({
+      attachmentId: attachment.id,
+      questionId: question.id,
+    });
+
+    const slug = question.slug.value;
+
+    await cacheRepository.set(
+      `question:${slug}:details`,
+      JSON.stringify({ empty: true })
+    );
+
+    const questionDetails = await questionsRepository.findDetailsBySlug(slug);
+
+    expect(questionDetails).toEqual({ empty: true });
+  });
+
+  it("should reset questions details cache when saving the question", async () => {
+    const user = await studentFactory.makePrismaStudent();
+
+    const question = await questionFactory.makePrismaQuestion({
+      authorId: user.id,
+    });
+
+    const attachment = await attachmentFactory.makePrismaAttachment();
+
+    await questionAttachmentFactory.makePrismaQuestionAttachment({
+      attachmentId: attachment.id,
+      questionId: question.id,
+    });
+
+    const slug = question.slug.value;
+
+    await cacheRepository.set(
+      `question:${slug}:details`,
+      JSON.stringify({ empty: true })
+    );
+    
+    await questionsRepository.save(question);
+
+    const cached = await cacheRepository.get(`question:${slug}:details`);
+
+    expect(cached).toBeNull();
   });
 });
